@@ -79,18 +79,7 @@ Analyze the time complexity of the heap-optimized approach using a priority queu
 - Show that the overall complexity is O(n log n)
 - Explain why building the heap initially is O(n)
 
-### Problem 4: Why is the Heap Faster?
-
-Explain the practical efficiency gains of using a heap.
-
-**Required:**
-
-- Compare the cost of finding minimums in unsorted list vs heap
-- Explain how the 'cost' of maintaining the heap saves time overall
-- Draw parallels to Dijkstra's algorithm with and without heap optimization
-- Discuss the trade-off between maintaining structure and operation efficiency
-
-### Problem 5: Performance Prediction
+### Problem 4: Performance Prediction
 
 Predict the speedup factor for different input sizes.
 
