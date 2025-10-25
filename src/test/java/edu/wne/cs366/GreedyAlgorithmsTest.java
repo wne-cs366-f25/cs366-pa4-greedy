@@ -48,16 +48,16 @@ public class GreedyAlgorithmsTest {
         }
 
         @Test
-        @DisplayName("Five sticks: [4, 3, 2, 6, 1] -> 29")
+        @DisplayName("Five sticks: [4, 3, 2, 6, 1] -> 35")
         void testFiveSticks() {
             int[] sticks = {4, 3, 2, 6, 1};
-            int expected = 29;
+            int expected = 35;
             // Explanation:
             // Connect 1+2=3, cost=3, remaining=[3,3,4,6]
-            // Connect 3+3=6, cost=6, remaining=[6,4,6]
-            // Connect 4+6=10, cost=10, remaining=[10,6]
+            // Connect 3+3=6, cost=6, remaining=[4,6,6]
+            // Connect 4+6=10, cost=10, remaining=[6,10]
             // Connect 6+10=16, cost=16, remaining=[16]
-            // Total cost = 3+6+10+10 = 29
+            // Total cost = 3+6+10+16 = 35
             assertEquals(expected, GreedyAlgorithms.connectSticksNaive(sticks));
         }
 
@@ -95,25 +95,25 @@ public class GreedyAlgorithmsTest {
         }
 
         @Test
-        @DisplayName("Sorted descending: [10, 8, 6, 4] -> 48")
+        @DisplayName("Sorted descending: [10, 8, 6, 4] -> 56")
         void testSortedDescending() {
             int[] sticks = {10, 8, 6, 4};
-            int expected = 48;
-            // Connect 4+6=10, cost=10, remaining=[10,8,10]
-            // Connect 8+10=18, cost=18, remaining=[18,10]
+            int expected = 56;
+            // Connect 4+6=10, cost=10, remaining=[8,10,10]
+            // Connect 8+10=18, cost=18, remaining=[10,18]
             // Connect 10+18=28, cost=28, remaining=[28]
-            // Total cost = 10+18+20 = 48
+            // Total cost = 10+18+28 = 56
             assertEquals(expected, GreedyAlgorithms.connectSticksNaive(sticks));
         }
 
         @Test
-        @DisplayName("Large values: [100, 200, 150] -> 600")
+        @DisplayName("Large values: [100, 200, 150] -> 700")
         void testLargeValues() {
             int[] sticks = {100, 200, 150};
-            int expected = 600;
-            // Connect 100+150=250, cost=250, remaining=[250,200]
-            // Connect 250+200=450, cost=450, remaining=[450]
-            // Total cost = 250+350 = 600
+            int expected = 700;
+            // Connect 100+150=250, cost=250, remaining=[200,250]
+            // Connect 200+250=450, cost=450, remaining=[450]
+            // Total cost = 250+450 = 700
             assertEquals(expected, GreedyAlgorithms.connectSticksNaive(sticks));
         }
 
@@ -165,10 +165,10 @@ public class GreedyAlgorithmsTest {
         }
 
         @Test
-        @DisplayName("Five sticks: [4, 3, 2, 6, 1] -> 29")
+        @DisplayName("Five sticks: [4, 3, 2, 6, 1] -> 35")
         void testFiveSticks() {
             int[] sticks = {4, 3, 2, 6, 1};
-            int expected = 29;
+            int expected = 35;
             assertEquals(expected, GreedyAlgorithms.connectSticksHeap(sticks));
         }
 
@@ -197,18 +197,18 @@ public class GreedyAlgorithmsTest {
         }
 
         @Test
-        @DisplayName("Sorted descending: [10, 8, 6, 4] -> 48")
+        @DisplayName("Sorted descending: [10, 8, 6, 4] -> 56")
         void testSortedDescending() {
             int[] sticks = {10, 8, 6, 4};
-            int expected = 48;
+            int expected = 56;
             assertEquals(expected, GreedyAlgorithms.connectSticksHeap(sticks));
         }
 
         @Test
-        @DisplayName("Large values: [100, 200, 150] -> 600")
+        @DisplayName("Large values: [100, 200, 150] -> 700")
         void testLargeValues() {
             int[] sticks = {100, 200, 150};
-            int expected = 600;
+            int expected = 700;
             assertEquals(expected, GreedyAlgorithms.connectSticksHeap(sticks));
         }
 
