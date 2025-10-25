@@ -1,8 +1,5 @@
 # CS366 - PA4: Theoretical Analysis
 
-**Student Name:** [Your Name]
-**Date:** [Submission Date]
-
 ---
 
 ## Problem 1: Greedy Choice Property
