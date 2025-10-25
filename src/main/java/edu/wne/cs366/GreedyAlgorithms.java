@@ -81,20 +81,6 @@ public class GreedyAlgorithms {
      *
      * Space Complexity: O(n) for the heap
      *
-     * Why is heap faster than naive?
-     * - Naive: Finding minimum in unsorted list = O(n), done n times = O(n²)
-     * - Heap: Extracting minimum from heap = O(log n), done n times = O(n log n)
-     * - The "extra work" of maintaining heap invariants (O(log n) per operation)
-     *   is MUCH less than scanning entire unsorted list (O(n) per operation)
-     * - This is the same principle as Dijkstra's with heap vs without!
-     *
-     * Why not just sort once (also O(n log n))?
-     * - After combining sticks, result must be reinserted into sorted order
-     * - Inserting into sorted array (ArrayList) requires O(n) shift operations
-     * - Total: O(n log n) sort + n × O(n) insertions = O(n²) - no better than naive!
-     * - Heap maintains "partial order" - just enough structure to find minimums efficiently
-     * - We don't need full sorted order, just access to smallest elements
-     *
      * @param sticks array of stick lengths
      * @return minimum total cost to connect all sticks
      * @throws IllegalArgumentException if sticks array is null or has less than 2 elements
@@ -139,7 +125,7 @@ public class GreedyAlgorithms {
         long heapTime = System.nanoTime() - startTime;
 
         // Display results
-        System.out.printf("Naive Approach (O(n²)):%n");
+        System.out.printf("Naive Approach (O(n^2)):%n");
         System.out.printf("  Cost: %d%n", naiveCost);
         System.out.printf("  Time: %d nanoseconds (%.3f ms)%n%n", naiveTime, naiveTime / 1_000_000.0);
 
