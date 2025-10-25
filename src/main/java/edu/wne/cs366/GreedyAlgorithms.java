@@ -47,19 +47,62 @@ public class GreedyAlgorithms {
      * @throws IllegalArgumentException if sticks array is null or has less than 2 elements
      */
     public static int connectSticksNaive(int[] sticks) {
-        // TODO: Implement naive approach
-        // 1. Validate input (null check, length check)
-        // 2. Copy sticks to ArrayList for dynamic removal
-        // 3. Loop while more than 1 stick remains:
-        //    a. Find index of first minimum
-        //    b. Find index of second minimum (excluding first)
-        //    c. Calculate cost (sum of two minimums)
-        //    d. Remove the two sticks (remove larger index first!)
-        //    e. Add their sum back to the list
-        //    f. Add cost to total
-        // 4. Return total cost
+        // 1. Validate input
+        if (sticks == null) {
+            throw new IllegalArgumentException("Sticks array cannot be null");
+        }
+        if (sticks.length < 2) {
+            throw new IllegalArgumentException("Need at least 2 sticks to connect");
+        }
 
-        throw new UnsupportedOperationException("TODO: Implement connectSticksNaive");
+        // 2. Copy sticks to ArrayList for dynamic removal
+        List<Integer> stickList = new ArrayList<>();
+        for (int stick : sticks) {
+            stickList.add(stick);
+        }
+
+        int totalCost = 0;
+
+        // 3. Loop while more than 1 stick remains
+        while (stickList.size() > 1) {
+            // a. Find index of first minimum
+            int firstMinIdx = 0;
+            for (int i = 1; i < stickList.size(); i++) {
+                if (stickList.get(i) < stickList.get(firstMinIdx)) {
+                    firstMinIdx = i;
+                }
+            }
+
+            // b. Find index of second minimum (excluding first)
+            int secondMinIdx = (firstMinIdx == 0) ? 1 : 0;
+            for (int i = 0; i < stickList.size(); i++) {
+                if (i != firstMinIdx) {
+                    if (stickList.get(i) < stickList.get(secondMinIdx)) {
+                        secondMinIdx = i;
+                    }
+                }
+            }
+
+            // c. Calculate cost (sum of two minimums)
+            int firstMin = stickList.get(firstMinIdx);
+            int secondMin = stickList.get(secondMinIdx);
+            int cost = firstMin + secondMin;
+
+            // d. Remove the two sticks (remove larger index first to avoid index shifting issues!)
+            int largerIdx = Math.max(firstMinIdx, secondMinIdx);
+            int smallerIdx = Math.min(firstMinIdx, secondMinIdx);
+            stickList.remove(largerIdx);
+            stickList.remove(smallerIdx);
+
+            // e. Add their sum back to the list
+            stickList.add(cost);
+
+            // f. Add cost to total
+            totalCost += cost;
+        }
+
+        // 4. Return total cost
+        return totalCost;
     }
 
     /**
@@ -81,24 +124,63 @@ public class GreedyAlgorithms {
      *
      * Space Complexity: O(n) for the heap
      *
+     * Why is heap faster than naive?
+     * - Naive: Finding minimum in unsorted list = O(n), done n times = O(n²)
+     * - Heap: Extracting minimum from heap = O(log n), done n times = O(n log n)
+     * - The "extra work" of maintaining heap invariants (O(log n) per operation)
+     *   is MUCH less than scanning entire unsorted list (O(n) per operation)
+     * - This is the same principle as Dijkstra's with heap vs without!
+     *
+     * Why not just sort once (also O(n log n))?
+     * - After combining sticks, result must be reinserted into sorted order
+     * - Inserting into sorted array (ArrayList) requires O(n) shift operations
+     * - Total: O(n log n) sort + n × O(n) insertions = O(n²) - no better than naive!
+     * - Heap maintains "partial order" - just enough structure to find minimums efficiently
+     * - We don't need full sorted order, just access to smallest elements
+     *
      * @param sticks array of stick lengths
      * @return minimum total cost to connect all sticks
      * @throws IllegalArgumentException if sticks array is null or has less than 2 elements
      */
     public static int connectSticksHeap(int[] sticks) {
-        // TODO: Implement heap-based approach
-        // 1. Validate input (null check, length check)
-        // 2. Create PriorityQueue<Integer> (min-heap by default)
-        // 3. Add all sticks to the heap
-        // 4. Loop while heap size > 1:
-        //    a. Extract first minimum (poll())
-        //    b. Extract second minimum (poll())
-        //    c. Calculate cost (sum of two minimums)
-        //    d. Add their sum back to heap (offer())
-        //    e. Add cost to total
-        // 5. Return total cost
+        // 1. Validate input
+        if (sticks == null) {
+            throw new IllegalArgumentException("Sticks array cannot be null");
+        }
+        if (sticks.length < 2) {
+            throw new IllegalArgumentException("Need at least 2 sticks to connect");
+        }
 
-        throw new UnsupportedOperationException("TODO: Implement connectSticksHeap");
+        // 2. Create PriorityQueue<Integer> (min-heap by default)
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        // 3. Add all sticks to the heap
+        for (int stick : sticks) {
+            minHeap.offer(stick);
+        }
+
+        int totalCost = 0;
+
+        // 4. Loop while heap size > 1
+        while (minHeap.size() > 1) {
+            // a. Extract first minimum (poll())
+            int firstMin = minHeap.poll();
+
+            // b. Extract second minimum (poll())
+            int secondMin = minHeap.poll();
+
+            // c. Calculate cost (sum of two minimums)
+            int cost = firstMin + secondMin;
+
+            // d. Add their sum back to heap (offer())
+            minHeap.offer(cost);
+
+            // e. Add cost to total
+            totalCost += cost;
+        }
+
+        // 5. Return total cost
+        return totalCost;
     }
 
     /**
