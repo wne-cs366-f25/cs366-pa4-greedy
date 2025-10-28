@@ -8,11 +8,17 @@ import java.util.List;
  * CS366 - PA4: Greedy Algorithms - Minimum Cost to Connect Sticks
  *
  * This assignment explores the greedy algorithm paradigm through the "Minimum Cost to Connect Sticks" problem.
- * Students will implement both a naive O(n²) approach and an optimized O(n log n) heap-based approach,
- * demonstrating how proper data structure selection dramatically improves algorithmic efficiency.
+ * Students will implement the SAME greedy algorithm using two different data structures:
+ *   1. Greedy Naive: O(n²) using unsorted ArrayList (linear scans for minimums)
+ *   2. Greedy Optimized: O(n log n) using PriorityQueue/heap (efficient minimum extraction)
+ *
+ * This demonstrates how data structure selection dramatically affects performance even when
+ * the underlying algorithm (greedy strategy) remains identical.
  *
  * Problem: You have n sticks of varying lengths. The cost to connect two sticks is the sum of their lengths.
  * Connect all sticks into one stick with minimum total cost.
+ *
+ * Greedy Strategy: Always connect the two smallest sticks first.
  *
  * Example: sticks = [2, 4, 3]
  * - Connect 2 and 3 → cost = 5, remaining = [5, 4]
@@ -25,37 +31,43 @@ import java.util.List;
 public class GreedyAlgorithms {
 
     /**
-     * Calculate minimum cost to connect all sticks using a NAIVE approach with unsorted list.
+     * Calculate minimum cost to connect all sticks using GREEDY NAIVE approach.
      *
-     * Greedy Strategy: Always combine the two smallest sticks first.
+     * Greedy Strategy: Always combine the two smallest sticks first (same as optimized version).
      *
      * Implementation Approach:
-     * - Store sticks in an ArrayList (unsorted)
-     * - Each iteration: find two minimum elements (O(n))
-     * - Remove them, add their sum back to list
+     * - Store sticks in an UNSORTED ArrayList (keep unsorted throughout!)
+     * - Each iteration: find two minimum elements via LINEAR SCAN through unsorted list (O(n))
+     * - Remove them, add their sum back to list (still unsorted)
      * - Repeat until one stick remains
      *
      * Time Complexity: O(n²)
      * - n-1 iterations (combining n sticks into 1)
-     * - Each iteration: O(n) to find two minimums + O(n) to remove elements
+     * - Each iteration: O(n) to find two minimums via linear scan + O(n) to remove elements
      * - Total: O(n) × O(n) = O(n²)
      *
      * Space Complexity: O(n) for the list
+     *
+     * IMPORTANT: Keep the list UNSORTED throughout. Do NOT sort the list - this is intentional
+     *            to demonstrate the O(n²) cost of repeated linear scans for minimum extraction.
+     *
+     * NOTE: The O(n²) complexity comes from using an UNSORTED list requiring O(n) scans,
+     *       NOT from the greedy algorithm itself! See connectSticksHeap() for O(n log n) version.
      *
      * @param sticks array of stick lengths
      * @return minimum total cost to connect all sticks
      * @throws IllegalArgumentException if sticks array is null or has less than 2 elements
      */
     public static int connectSticksNaive(int[] sticks) {
-        // TODO: Implement naive approach
+        // TODO: Implement greedy naive approach with UNSORTED ArrayList
         // 1. Validate input (null check, length check)
-        // 2. Copy sticks to ArrayList for dynamic removal
+        // 2. Copy sticks to ArrayList for dynamic removal (keep UNSORTED)
         // 3. Loop while more than 1 stick remains:
-        //    a. Find index of first minimum
-        //    b. Find index of second minimum (excluding first)
+        //    a. Find index of first minimum via LINEAR SCAN through unsorted list
+        //    b. Find index of second minimum (excluding first) via LINEAR SCAN
         //    c. Calculate cost (sum of two minimums)
         //    d. Remove the two sticks (remove larger index first!)
-        //    e. Add their sum back to the list
+        //    e. Add their sum back to the list (append to end - keep UNSORTED!)
         //    f. Add cost to total
         // 4. Return total cost
 
@@ -63,14 +75,14 @@ public class GreedyAlgorithms {
     }
 
     /**
-     * Calculate minimum cost to connect all sticks using HEAP-OPTIMIZED approach.
+     * Calculate minimum cost to connect all sticks using GREEDY OPTIMIZED approach.
      *
-     * Greedy Strategy: Always combine the two smallest sticks first.
+     * Greedy Strategy: Always combine the two smallest sticks first (SAME as naive version).
      *
      * Implementation Approach:
      * - Use Java's PriorityQueue (min-heap) to efficiently maintain smallest elements
      * - Build heap from input: O(n)
-     * - Each iteration: 2 extractions + 1 insertion = O(log n)
+     * - Each iteration: 2 extractions + 1 insertion = O(log n) via HEAP operations
      * - Repeat until one stick remains
      *
      * Time Complexity: O(n log n)
@@ -80,6 +92,9 @@ public class GreedyAlgorithms {
      * - Total: O(n) + O(n log n) = O(n log n)
      *
      * Space Complexity: O(n) for the heap
+     *
+     * KEY INSIGHT: Same greedy algorithm as naive, but using heap instead of unsorted list
+     *              reduces time complexity from O(n²) to O(n log n)!
      *
      * @param sticks array of stick lengths
      * @return minimum total cost to connect all sticks
@@ -102,39 +117,41 @@ public class GreedyAlgorithms {
     }
 
     /**
-     * Compare the performance of naive vs heap approaches empirically.
+     * Compare the performance of Greedy Naive vs Greedy Optimized approaches empirically.
      *
      * This method runs both implementations on the same input and measures their execution times,
-     * demonstrating the practical difference between O(n²) and O(n log n) complexity.
+     * demonstrating the practical difference between O(n²) and O(n log n) complexity when
+     * using different data structures for the SAME greedy algorithm.
      *
      * @param sticks array of stick lengths
      */
     public static void compareApproaches(int[] sticks) {
-        System.out.println("Comparing Naive vs Heap Approaches");
-        System.out.println("==================================");
-        System.out.printf("Input size: %d sticks%n%n", sticks.length);
+        System.out.println("Comparing Greedy Naive vs Greedy Optimized");
+        System.out.println("===========================================");
+        System.out.printf("Input size: %d sticks%n", sticks.length);
+        System.out.println("(Both use the SAME greedy algorithm, different data structures)\n");
 
-        // Test naive approach
+        // Test greedy naive approach
         long startTime = System.nanoTime();
         int naiveCost = connectSticksNaive(sticks);
         long naiveTime = System.nanoTime() - startTime;
 
-        // Test heap approach
+        // Test greedy optimized approach
         startTime = System.nanoTime();
         int heapCost = connectSticksHeap(sticks);
         long heapTime = System.nanoTime() - startTime;
 
         // Display results
-        System.out.printf("Naive Approach (O(n^2)):%n");
+        System.out.printf("Greedy Naive (unsorted list, O(n^2)):%n");
         System.out.printf("  Cost: %d%n", naiveCost);
         System.out.printf("  Time: %d nanoseconds (%.3f ms)%n%n", naiveTime, naiveTime / 1_000_000.0);
 
-        System.out.printf("Heap Approach (O(n log n)):%n");
+        System.out.printf("Greedy Optimized (heap, O(n log n)):%n");
         System.out.printf("  Cost: %d%n", heapCost);
         System.out.printf("  Time: %d nanoseconds (%.3f ms)%n%n", heapTime, heapTime / 1_000_000.0);
 
         System.out.printf("Speedup: %.2fx%n", (double) naiveTime / heapTime);
-        System.out.printf("Results match: %s%n", naiveCost == heapCost);
+        System.out.printf("Results match: %s (same greedy algorithm!)%n", naiveCost == heapCost);
     }
 
     /**

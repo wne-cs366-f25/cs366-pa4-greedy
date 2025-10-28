@@ -20,22 +20,24 @@
 
 ---
 
-## Problem 2: Time Complexity Analysis - Naive Approach
+## Problem 2: Time Complexity Analysis - Greedy Naive Approach
 
-**Analyze the time complexity of the naive approach using an unsorted list.**
+**Analyze the time complexity of the greedy naive approach using an UNSORTED list.**
+
+**Important Note:** This approach uses the same **greedy algorithm** as the optimized version (always combine the two smallest sticks). The difference is in the **implementation efficiency** - this version uses an **unsorted ArrayList** requiring O(n) linear scans to find minimums, rather than O(log n) heap operations.
 
 ### Algorithm Description
 
-[Briefly describe the steps of the naive algorithm]
+[Briefly describe the steps of the greedy naive algorithm - emphasize that it follows the greedy strategy but uses an **unsorted ArrayList** requiring linear scans for each minimum extraction. The list remains unsorted throughout - no sorting is performed.]
 
 ### Iteration Analysis
 
 [Explain why each iteration takes O(n) time. Consider:
 
-- Finding the first minimum: O(?)
-- Finding the second minimum: O(?)
+- Finding the first minimum in the **unsorted list**: O(?) - must scan all elements
+- Finding the second minimum in the **unsorted list**: O(?) - must scan all elements again
 - Removing elements: O(?)
-- Adding element back: O(?)]
+- Adding element back to the **unsorted list**: O(?)]
 
 ### Total Complexity Calculation
 
@@ -47,15 +49,17 @@
 
 ### Recurrence Relation
 
-[Write and solve the recurrence relation for the naive approach]
+[Write and solve the recurrence relation for the greedy naive approach]
 
-**Conclusion:** The naive approach has time complexity of **\_\_\_\_**.
+**Conclusion:** The greedy naive approach has time complexity of **\_\_\_\_**.
 
 ---
 
-## Problem 3: Time Complexity Analysis - Heap Approach
+## Problem 3: Time Complexity Analysis - Greedy Optimized Approach
 
-**Analyze the time complexity of the heap-optimized approach using a priority queue.**
+**Analyze the time complexity of the greedy optimized approach using a priority queue (heap).**
+
+**Important Note:** This approach uses the **exact same greedy algorithm** as the naive version - it always combines the two smallest sticks. The only difference is using a heap data structure to efficiently find minimums, rather than linear scans.
 
 ### Heap Operations
 
@@ -87,13 +91,15 @@
 - Cost per iteration: O(?)
 - Total: ?]
 
-**Conclusion:** The heap approach has time complexity of **\_\_\_\_**.
+**Conclusion:** The greedy optimized (heap) approach has time complexity of **\_\_\_\_**.
 
 ---
 
 ## Problem 4: Performance Prediction
 
-**Predict the speedup factor for different input sizes.**
+**Predict the speedup factor for different input sizes when comparing Greedy Naive vs Greedy Optimized implementations.**
+
+**Important Note:** Both implementations use the same greedy strategy. This analysis demonstrates how data structure choice affects performance while keeping the algorithm constant.
 
 ### Theoretical Speedup Calculations
 
