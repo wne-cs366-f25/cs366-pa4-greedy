@@ -8,8 +8,7 @@
       "version": "21",
       "jdkDistro": "open",
       "gradleVersion": "latest"
-    },
-    "ghcr.io/devcontainers-extra/features/gradle-sdkman:2": {}
+    }
   },
   "runArgs": ["--name", "cs366-pa4-greedy"],
   "customizations": {
