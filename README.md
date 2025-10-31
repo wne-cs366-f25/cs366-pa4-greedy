@@ -59,6 +59,8 @@ Prove that the greedy choice (always combining the two smallest sticks) leads to
 - Provide an informal proof using the exchange argument or similar technique
 - Explain why selecting any sticks other than the two smallest cannot lead to a better solution
 
+**Helpful Resource:** For guidance on writing greedy algorithm proofs, refer to the **Interval Scheduling proof** we worked through in class. You can find both the exchange argument and "greedy stays ahead" approaches at [Exam2/activities/solutions/Greedy_Interval_Scheduling_Solutions.md](https://github.com/wne-cs366-f25/algo-syllabot/blob/main/Exam2/activities/solutions/Greedy_Interval_Scheduling_Solutions.md#proof-that-earliest-finish-time-algorithm-is-optimal) in the syllabot repository. While the problem domain is different (intervals vs. sticks), the proof structure and techniques are directly applicable to this problem.
+
 ### Problem 2: Time Complexity Analysis - Naive Approach
 
 Analyze the time complexity of the naive approach using an unsorted list.
